@@ -32,5 +32,13 @@ public class Grafo {
         grafo[n1][n2]=distancia;
         grafo[n2][n1]=distancia;
     }
-
+/*-----------------------------------------------------*/ 
+    //Crear la posicion del nodo
+        private int posicionNodo(char nodo) {
+        for(int i=0; i < nodos.length; i++) {
+            if(nodos[i] == nodo)
+                return i;
+        }
+        return -1;
+    }
 }
