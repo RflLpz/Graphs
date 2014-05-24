@@ -70,8 +70,49 @@ public class Grafo {
         }
         String ruta = "";
         //Recorrido de la pila para armar la ruta en orden correcto
-        while(!pila.isEmpty()) ruta+=(pila.pop().id + " ");
-        return distancia + ": " + ruta;
+        while(!pila.isEmpty())
+        {
+            
+                switch (pila.pop().id ) 
+                {
+                     case 'a':
+                        ruta += " Colima ";
+                        break;
+                     case 'b':
+                        ruta += " Cuahutemoc ";
+                        break;
+                     case 'c':
+                        ruta += " Ixtlahuacan ";
+                        break;
+                     case 'd':
+                        ruta += " Tecoman ";
+                        break;
+                     case 'e':
+                        ruta += " Villa de Alvarez ";
+                        break;
+                     case 'f':
+                        ruta += " Coquimatlan ";
+                        break;
+                     case 'g':
+                        ruta += " Armeria ";
+                        break;
+                     case 'h':
+                        ruta += " Comala ";
+                        break;
+                     case 'i':
+                        ruta += " Minatitlan ";
+                        break;
+                     case 'j':
+                        ruta += " Manzanillo ";
+                        break;
+                     default:
+                         break;
+                
+                }
+        }
+        // distancia + ": " + ruta;
+        String respuesta = "Distancia " + distancia + " km ruta: "+ ruta;
+        return respuesta;
     }
     public void encontrarRutaMinima(char inicio)
     {
@@ -86,30 +127,81 @@ public class Grafo {
             revisados.add(tmp);            //Push a la lista de terminados
             int p = posicionNodo(tmp.id);   
             for(int j=0; j < grafo[p].length; j++) 
-            {  // revisa los nodos hijos del nodo tmp
+            {  //Revisa los nodos hijos del nodo tmp
                 if(grafo[p][j] == 0) 
-                    continue;        // si no hay conexión no lo evalua
+                    continue;        //Si no hay conexión no lo evalua
                 if(estaTerminado(j)) 
-                    continue;      // si ya fue agregado a la lista de terminados
+                    continue;      //Si ya fue agregado a la lista de terminados
                 Nodo nod = new Nodo(nodos[j],tmp.distancia+grafo[p][j],tmp);
-                // si no está en la cola de prioridad, lo agrega
+                //Si no esta en la cola de prioridad, lo agrega
                 if(!cola.contains(nod))
                 {
                     cola.add(nod);
                     continue;
                 }
-                // si ya está en la cola de prioridad actualiza la distancia menor
+                //Si ya está en la cola de prioridad actualiza la distancia menor
                 for(Nodo x: cola) 
                 {
-                    // si la distancia en la cola es mayor que la distancia calculada
+                    //Si la distancia en la cola es mayor que la distancia calculada
                     if((x.id == nod.id) && (x.distancia > nod.distancia))
                     {
-                        cola.remove(x); // remueve el nodo de la cola
-                        cola.add(nod);  // agrega el nodo con la nueva distancia
-                        break;          // no sigue revisando
+                        cola.remove(x); //Remueve el nodo de la cola
+                        cola.add(nod);  //Agrega el nodo con la nueva distancia
+                        break;          //No sigue revisando
                     }
                 }
             }
         }
+    }
+/*-----------------------------------------------------------------------------------*/
+   //Verifica si un nodo ya está en lista de terminados
+    public boolean estaTerminado(int j) {
+        Nodo tmp = new Nodo(nodos[j]);
+        return revisados.contains(tmp);
+    }
+/*-----------------------------------------------------------------------------------*/    
+        // recorre recursivamente las rutas entre un nodo inicial y un nodo final
+    // almacenando en una cola cada nodo visitado
+    private void recorrerRutas(int nodoI, int nodoF, Stack<Integer> resultado) {
+        // si el nodo inicial es igual al final se evalúa la ruta en revisión
+        if(nodoI == nodoF)
+        {
+            int respuesta = evaluar(resultado);
+            if(respuesta < distanciaRutaMasCorta) 
+            {
+                distanciaRutaMasCorta = respuesta;
+                rutaMasCorta     = "Ruta: ";
+                for(int x: resultado) 
+                    rutaMasCorta += (nodos[x]+", ");
+            }
+            return;
+        }
+        //Si el nodoInicial no es igual al final se crea una lista con todos los nodos
+        //Adyacentes al nodo inicial que no estén en la ruta en evaluación
+        List<Integer> lista = new Vector<Integer>();
+        for(int i=0; i<grafo.length;i++) 
+        {
+            if(grafo[nodoI][i]!=0 && !resultado.contains(i))
+                lista.add(i);
+        }
+        //Se recorren todas las rutas formadas con los nodos adyacentes al inicial
+        for(int nodo: lista)
+        {
+            resultado.push(nodo);
+            recorrerRutas(nodo, nodoF, resultado);
+            resultado.pop();
+        }
+    }
+ /*-----------------------------------------------------------------------------------*/
+    //Evaluar la distancia de una ruta
+    public int evaluar(Stack<Integer> resultado) {
+        int  resp = 0;
+        int[]   r = new int[resultado.size()];
+        int     i = 0;
+        for(int x: resultado) 
+            r[i++]=x;
+        for(i=1; i<r.length; i++) 
+            resp+=grafo[r[i]][r[i-1]];
+        return resp;
     }
 }
