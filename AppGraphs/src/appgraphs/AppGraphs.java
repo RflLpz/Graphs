@@ -18,15 +18,17 @@ public class AppGraphs {
       
     }
     public static void main(String[] args) {
-        Grafo g = new Grafo("abcdefghij");
+        Grafo g = new Grafo("abcdefghijkl");
         //A - Colima
-        g.agregarRuta('a', 'b', 21);//Colima - Cuahutemoc 
+        g.agregarRuta('a', 'b', 20);//Colima - Cuahutemoc 
         g.agregarRuta('a', 'e', 4);//Colima - Villa de alavarez
         g.agregarRuta('a', 'd', 50);//Colima - Tecoman
         g.agregarRuta('a', 'c', 40);//Colima - Ixtlahuacan
         //B - Cuahutemoc
         g.agregarRuta('b', 'a', 20);//Cuahutemoc - Colima
         g.agregarRuta('b', 'h', 31);//Cuahutemoc - Comala
+        g.agregarRuta('b', 'k', 21);//Cuahutemoc - Alzada
+        g.agregarRuta('b', 'l', 7);//Cuahutemoc - Alcaraces
         //C - Ixtlahuacan
         g.agregarRuta('c', 'a', 40);//Ixtlahuacan - Colima
         g.agregarRuta('c', 'd', 31);//Ixtlahuacan - Tecoman 
@@ -59,10 +61,13 @@ public class AppGraphs {
         g.agregarRuta('j', 'i', 54);//Manzanillo - Minatitlan
         g.agregarRuta('j', 'g', 54);//Manzanillo - Armeria
         g.agregarRuta('j', 'd', 69);//Manzanillo - Tecoman  
+        //K - Alzada
+        g.agregarRuta('k', 'b', 21);//Alzada - Cuahutemoc
+        //L - Alcaraces
+        g.agregarRuta('l', 'b', 7);//Alcaraces - Cuahutemoc
         
-        
-        char inicio = 'e';
-        char fin    = 'd';
+        char inicio = 'k';
+        char fin    = 'l';
         String respuesta = g.encontrarRutaMinima(inicio, fin);
         System.out.println(respuesta);
     }

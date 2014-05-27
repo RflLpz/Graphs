@@ -105,6 +105,12 @@ public class Grafo {
                      case 'j':
                         ruta += " Manzanillo ";
                         break;
+                     case 'k':
+                         ruta+= " Alzada ";
+                         break;
+                     case 'l':
+                         ruta+=" Alcaraces ";
+                         break;
                      default:
                          break;
                 
